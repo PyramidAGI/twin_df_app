@@ -58,3 +58,21 @@ Each row in `smartrules.csv` defines a rule with these columns:
 **predict** — triggers when `o1`, `o2`, and `property` are found in the grid but `value` is not yet present (a forward-looking warning).
 
 **measurement** — triggers when `o1`, `o2`, `property`, and `value` are all found in the grid (a confirmed observation).
+
+## Path Walk
+
+```bash
+python app/pathwalk.py
+```
+
+Asks for a folder number, then walks a path through the grid from the left anchor concept (`o1`) to the right anchor concept (`o2`) as defined in `smartrules.csv`. Concept names vary per folder and are resolved dynamically.
+
+**Algorithm: column-by-column linear interpolation**
+
+1. Locate `o1` and `o2` in the grid; the one with the smaller column index becomes the start (left), the other the end (right).
+2. Step column by column from start to end, interpolating the row linearly at each step.
+3. At each column, collect all cells within ±2 rows of the interpolated row.
+4. Put all values from this corridor into a set.
+5. Match the set against `smartrules.csv` and print triggered messages.
+
+This ensures that concepts and properties lying along the diagonal between the two anchors are captured and evaluated, even when the path is not horizontal.
