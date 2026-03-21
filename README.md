@@ -35,3 +35,26 @@ python app/main.py
 ```
 
 This will create the folders and seed each one with two 10x10 DataFrames and one metadata file.
+
+## Smart Rules
+
+```bash
+python app/smartrules.py
+```
+
+Asks for a folder number, then reads `smartrules.csv` from that folder and inspects `<N>-before.parquet` to trigger messages.
+
+Each row in `smartrules.csv` defines a rule with these columns:
+
+| Column | Description |
+|---|---|
+| `type` | `predict` or `measurement` |
+| `o1` | First object to find in the grid |
+| `o2` | Second object to find in the grid |
+| `property-or-threshold` | Property name to find in the grid |
+| `value` | Value to look for in the grid |
+| `message` | Message to print when the rule triggers |
+
+**predict** — triggers when `o1`, `o2`, and `property` are found in the grid but `value` is not yet present (a forward-looking warning).
+
+**measurement** — triggers when `o1`, `o2`, `property`, and `value` are all found in the grid (a confirmed observation).
