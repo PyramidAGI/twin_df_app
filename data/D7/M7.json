@@ -1,0 +1,10 @@
+{
+  "dataset_id": 7,
+  "folder_name": "D7",
+  "before_file": "7-before.parquet",
+  "after_file": "7-after.parquet",
+  "grid_rows": 10,
+  "grid_cols": 10,
+  "created_utc": "2026-03-21T08:59:55.315838+00:00",
+  "description": "Twin 10x10 grid DataFrames stored as Parquet."
+}
