@@ -1,0 +1,3 @@
+type,o1,o2,property-or-threshold,value,message
+predict,vase,table,stability,60,that vase is going to fall off the table
+measurement,vase,table,location,90,that vase is actually falling off the table
