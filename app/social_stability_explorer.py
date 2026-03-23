@@ -8,6 +8,9 @@ from typing import Dict, List, Tuple, Any
 
 import pandas as pd
 
+BASE_DIR = Path(__file__).resolve().parents[1]
+DEFAULT_JSON = BASE_DIR / "data" / "Examples" / "vase-table.json"
+DEFAULT_LOG  = BASE_DIR / "logs" / "social_stability.log"
 
 GRID_SIZE = 10
 ROWS = list("ABCDEFGHIJ")
@@ -207,8 +210,8 @@ def build_social_explorer(uploaded_json_path: str, log_path: str = "social_stabi
     return explorer
 
 
-def run_demo(uploaded_json_path: str = "/mnt/data/vase-table.json") -> Tuple[pd.DataFrame, List[str], str]:
-    explorer = build_social_explorer(uploaded_json_path=uploaded_json_path, log_path="/mnt/data/social_stability.log")
+def run_demo(uploaded_json_path: str = str(DEFAULT_JSON)) -> Tuple[pd.DataFrame, List[str], str]:
+    explorer = build_social_explorer(uploaded_json_path=uploaded_json_path, log_path=str(DEFAULT_LOG))
     status_df = explorer.evaluate_social_stability()
     messages = explorer.neighborhood_messages()
     return status_df, messages, str(explorer.log_path)
@@ -218,7 +221,7 @@ if __name__ == "__main__":
     status_df, messages, log_path = run_demo()
 
     print("=== Sparse social world grid ===")
-    print(build_social_explorer("/mnt/data/vase-table.json").df)
+    print(build_social_explorer(str(DEFAULT_JSON)).df)
     print("\n=== Stability evaluation ===")
     print(status_df.to_string(index=False))
     print("\n=== Emitted messages ===")
