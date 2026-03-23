@@ -1,0 +1,3 @@
+type,o1,o2,property-or-threshold,value,message
+predict,worker,social tension,pref,95,that salary is more than i earn
+measurement,worker,social tension,pref,55,that salary is more than i earn
