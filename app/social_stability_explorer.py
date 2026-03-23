@@ -169,7 +169,7 @@ def load_example_grid(json_path: str) -> List[List[str]]:
     return social_grid
 
 
-def build_social_explorer(uploaded_json_path: str, log_path: str = "social_stability.log") -> SocialStabilityExplorer:
+def build_social_explorer(uploaded_json_path: str, log_path: str = str(DEFAULT_LOG)) -> SocialStabilityExplorer:
     grid = load_example_grid(uploaded_json_path)
     explorer = SocialStabilityExplorer(base_grid=grid, threshold=0.65, log_path=log_path)
 
