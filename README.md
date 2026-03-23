@@ -76,3 +76,31 @@ Asks for a folder number, then walks a path through the grid from the left ancho
 5. Match the set against `smartrules.csv` and print triggered messages.
 
 This ensures that concepts and properties lying along the diagonal between the two anchors are captured and evaluated, even when the path is not horizontal.
+
+## Social Stability Explorer
+
+```bash
+python app/social_stability_explorer.py
+```
+
+Loads a sparse 10x10 social-world grid from `data/Examples/vase-table.json`, places social objects (people, groups, events) onto the grid, and evaluates each object against four social properties:
+
+| Property | Description |
+|---|---|
+| `stability` | How stable the social position is (0–1) |
+| `tension` | Level of social tension (0–1) |
+| `trust` | Level of trust (0–1) |
+| `engagement` | Level of engagement (0–1) |
+
+**States** assigned per object:
+
+| State | Condition |
+|---|---|
+| `stable` | High stability, low tension, good trust |
+| `stress_accumulation` | Moderate tension, acceptable trust |
+| `threshold_crossing` | Tension ≥ 0.85 |
+| `drift` | Low stability or low trust |
+| `withdrawal` | Low engagement |
+| `watch` | None of the above |
+
+Emits structured messages in the form `o1,o2,property,value` and fires alerts for threshold crossings to `logs/social_stability.log`.
