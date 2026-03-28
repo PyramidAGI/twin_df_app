@@ -106,6 +106,15 @@ def main():
         if not user_input:
             continue
 
+        if user_input.lower() == "show db":
+            with open(CSV_PATH, encoding="utf-8-sig") as f:
+                for i, line in enumerate(f):
+                    if i >= 100:
+                        break
+                    print(line.rstrip())
+            print()
+            continue
+
         cleaned = [w.strip("?!.,;:").lower() for w in user_input.split()]
         words = [w for w in cleaned if w and w not in STOPWORDS]
         if not words:
