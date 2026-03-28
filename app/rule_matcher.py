@@ -106,7 +106,7 @@ def main():
         if not user_input:
             continue
 
-        words = [w.lower() for w in user_input.split() if w.lower() not in STOPWORDS]
+        words = [w.strip("?!.,;:").lower() for w in user_input.split() if w.strip("?!.,;:").lower() not in STOPWORDS and w.strip("?!.,;:")]
         if not words:
             print("(no meaningful words to match after filtering stopwords)\n")
             continue
