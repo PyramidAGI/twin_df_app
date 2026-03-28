@@ -1,8 +1,8 @@
 ﻿e0;e1;e2;e3;e4;v;threshold;message
-q;pref;person001;city292;;90;;
-;loc;person001;city292;;90;;
-;stat;person001;city292;;5;;
-;own;person001;city292;;5;;
+q;pref;person001;place292;;90;;
+;loc;person001;place292;;90;;
+;stat;person001;place292;;5;;
+;own;person001;place292;;5;;
 q;pref;person721;thing123;;90;;
 ;loc;person721;thing123;;90;;
 ;stat;person721;thing123;;90;;
@@ -19,3 +19,4 @@ i;pref;person725;concept821;;70;;
 ;loc;;;;;;
 ;stat;thing993;thing553;property005;90;80;that vase is going to fall off the table
 ;own;;;;;;
+a;loc;person882;place292;;70;;
