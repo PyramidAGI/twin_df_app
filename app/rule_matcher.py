@@ -17,11 +17,15 @@ def load_rules() -> pd.DataFrame:
 
 
 def row_tokens(row: pd.Series) -> list[str]:
-    """Return all non-null string cell values in a row as lowercase tokens."""
+    """Return all non-null cell values as lowercase tokens; message field is split into words."""
     tokens = []
-    for val in row:
-        if pd.notna(val):
-            tokens.append(str(val).strip().lower())
+    for col, val in row.items():
+        if pd.notna(val) and str(val).strip():
+            text = str(val).strip().lower()
+            if col == "message":
+                tokens.extend(text.split())
+            else:
+                tokens.append(text)
     return tokens
 
 
@@ -80,7 +84,9 @@ def main():
 
         print(f"\nTop {len(top)} matches for '{user_input}':")
         for rank, (_, row) in enumerate(top.iterrows(), start=1):
-            print(f"  {rank}. {format_row(row)}")
+            msg = row.get("message", None)
+            msg_str = f"\n     >> {msg}" if pd.notna(msg) and str(msg).strip() else ""
+            print(f"  {rank}. {format_row(row)}{msg_str}")
         print()
 
 
