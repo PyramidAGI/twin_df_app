@@ -106,6 +106,13 @@ def main():
         if not user_input:
             continue
 
+        if user_input.lower() == "show lookup":
+            with open(LOOKUP_PATH, encoding="utf-8-sig") as f:
+                for line in f:
+                    print(line.rstrip())
+            print()
+            continue
+
         if user_input.lower() == "show db":
             with open(CSV_PATH, encoding="utf-8-sig") as f:
                 for i, line in enumerate(f):
