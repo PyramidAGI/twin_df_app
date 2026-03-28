@@ -10,6 +10,15 @@ import pandas as pd
 CSV_PATH    = os.path.join(os.path.dirname(__file__), "..", "data", "common sense rules.csv")
 LOOKUP_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "entity_lookup.csv")
 
+STOPWORDS = {
+    "who", "what", "where", "when", "why", "how",
+    "is", "are", "was", "were", "be", "been", "being",
+    "a", "an", "the", "in", "on", "at", "to", "of",
+    "and", "or", "for", "with", "has", "have", "had",
+    "do", "does", "did", "it", "its", "this", "that",
+    "there", "their", "they", "he", "she", "we", "i",
+}
+
 
 def load_rules() -> pd.DataFrame:
     df = pd.read_csv(CSV_PATH, sep=";")
@@ -97,7 +106,10 @@ def main():
         if not user_input:
             continue
 
-        words = [w.lower() for w in user_input.split()]
+        words = [w.lower() for w in user_input.split() if w.lower() not in STOPWORDS]
+        if not words:
+            print("(no meaningful words to match after filtering stopwords)\n")
+            continue
         top   = find_top_matches(words, df, lookup)
 
         print(f"\nTop {len(top)} matches for '{user_input}':")
