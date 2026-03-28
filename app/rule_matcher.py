@@ -99,7 +99,7 @@ def main():
     print("Type 'quit' to exit.\n")
 
     while True:
-        user_input = input("Enter search string: ").strip()
+        user_input = input("Enter input string: ").strip()
         if user_input.lower() in ("quit", "q", "exit"):
             print("Goodbye.")
             break
