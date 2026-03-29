@@ -4,12 +4,14 @@ person721;jill;person
 person725;john;person
 person882;;person
 person923;;person
-thing123;;thing
+thing123;computer;thing
 thing553;table;thing
 thing993;vase;thing
+thing277;lamp;thing
 place292;london;place
 place663;amsterdam;place
 emo005;;emotion
 task292;;task
 concept821;;concept
 property005;unstable;property
+property101;sad;property
