@@ -75,12 +75,14 @@ def main():
         subject, verb, obj = extract_svo(doc)
         question = is_question(text, doc)
         tense = detect_tense(doc)
+        command = not question and len(doc) > 0 and doc[0].pos_ in ("VERB", "AUX")
 
         print(f"\n  Subject  : {subject or '-'}")
         print(f"  Verb     : {verb or '-'}")
         print(f"  Object   : {obj or '-'}")
         print(f"  Tense    : {tense}")
-        print(f"  Question : {'yes' if question else 'no'}\n")
+        print(f"  Question : {'yes' if question else 'no'}")
+        print(f"  Command  : {'yes' if command else 'no'}\n")
 
 
 if __name__ == "__main__":
