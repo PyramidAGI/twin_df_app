@@ -23,6 +23,26 @@ def is_question(text: str, doc) -> bool:
     return False
 
 
+def detect_tense(doc) -> str:
+    """Detect tense from verb morphology and modal/auxiliary patterns."""
+    tokens = list(doc)
+    for i, token in enumerate(tokens):
+        if token.pos_ in ("VERB", "AUX"):
+            # future: will/shall/going to + verb
+            if token.lemma_ in ("will", "shall"):
+                return "future"
+            if token.lemma_ == "go" and i + 2 < len(tokens):
+                if tokens[i + 1].text.lower() == "to":
+                    return "future"
+            tense = token.morph.get("Tense")
+            if tense:
+                if "Past" in tense:
+                    return "past"
+                if "Pres" in tense:
+                    return "present"
+    return "-"
+
+
 def extract_svo(doc):
     subject = None
     verb = None
@@ -54,10 +74,12 @@ def main():
 
         subject, verb, obj = extract_svo(doc)
         question = is_question(text, doc)
+        tense = detect_tense(doc)
 
         print(f"\n  Subject  : {subject or '-'}")
         print(f"  Verb     : {verb or '-'}")
         print(f"  Object   : {obj or '-'}")
+        print(f"  Tense    : {tense}")
         print(f"  Question : {'yes' if question else 'no'}\n")
 
 
