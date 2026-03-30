@@ -53,8 +53,13 @@ def extract_svo(doc):
             subject = token.text
         if token.pos_ in ("VERB", "AUX") and verb is None:
             verb = token.lemma_
-        if token.dep_ in ("dobj", "pobj", "attr", "oprd") and obj is None:
+        if token.dep_ in ("dobj", "pobj", "attr", "oprd", "appos") and obj is None:
             obj = token.text
+
+    # Fallback: if no verb found and the first token is the ROOT,
+    # treat it as an imperative verb (e.g. "book an appointment")
+    if verb is None and len(doc) > 0 and doc[0].dep_ == "ROOT":
+        verb = doc[0].lemma_
 
     return subject, verb, obj
 
@@ -75,7 +80,10 @@ def main():
         subject, verb, obj = extract_svo(doc)
         question = is_question(text, doc)
         tense = detect_tense(doc)
-        command = not question and len(doc) > 0 and doc[0].pos_ in ("VERB", "AUX")
+        first_is_verb = len(doc) > 0 and (
+            doc[0].pos_ in ("VERB", "AUX") or doc[0].dep_ == "ROOT" and subject is None
+        )
+        command = not question and first_is_verb
 
         print(f"\n  Subject  : {subject or '-'}")
         print(f"  Verb     : {verb or '-'}")
